@@ -1,0 +1,27 @@
+import telebot
+import random
+from telebot import types
+
+bot = telebot.TeleBot('1739840758:AAEpGFv8vL56YvloK-S932gLDUIpCGRgceI')
+
+keyboard1 = types.ReplyKeyboardMarkup(one_time_keyboard=True)
+item1 = types.KeyboardButton('Кто твой Создатель?')
+item2 = types.KeyboardButton('Что хочет мне сказать твой Создатель?')
+keyboard1.add(item1, item2)
+
+a1 = ['Я думаю, он - Бог', 'Я думаю, он - Отражение Тебя', 'Не знаю точно, но думаю, что он смертный', 'Для меня - он Отец']
+a2 = ['Соси глубже - живи лучше', 'Не забудь подрочить сегодня', 'Скрой свою наготу за имитацией деятельности']
+
+@bot.message_handler(commands=['start'])
+def start_message(message):
+ bot.send_message(message.chat.id, 'Ты знаком с моим Создателем? Хм.. Я тоже не знаю кто он, но у меня есть догадки. Я - медиум, через меня Создатель общается с теми, кто пришел сюда.', reply_markup=keyboard1)
+
+@bot.message_handler(content_types=['text'])
+def aaaa(message):
+ if message.chat.type == 'private':
+ if message.text == 'Кто твой Создатель?':
+ bot.send_message(message.chat.id, str(random.choice(a1)))
+ elif message.text == 'Что хочет мне сказать твой Создатель?':
+ bot.send_message(message.chat.id, str(random.choice(a2)))
+
+bot.polling()
